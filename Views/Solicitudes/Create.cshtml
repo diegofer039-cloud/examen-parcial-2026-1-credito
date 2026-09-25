@@ -39,7 +39,7 @@
                     Ingresos mensuales registrados:
                     <strong>@(((double)(ViewBag.IngresosMensuales ?? 0d)).ToString("N2"))</strong>.
                     Máximo permitido (10x):
-                    <strong>@(((double)(ViewBag.IngresosMensuales ?? 0d)) * 10).ToString("N2"))</strong>.
+                    <strong>@((((double)(ViewBag.IngresosMensuales ?? 0d)) * 10).ToString("N2"))</strong>.
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Registrar solicitud</button>

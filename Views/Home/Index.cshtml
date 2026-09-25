@@ -2,7 +2,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero">
+    <h1>Créditos con respuesta <span class="accent">en tiempo real</span>.</h1>
+    <p class="hero-lead">
+        Registra tu solicitud, sigue la evaluación del analista y recibe la decisión en la misma pantalla,
+        sin recargar la página.
+    </p>
+    <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" asp-controller="Solicitudes" asp-action="Create">Nueva solicitud</a>
+        <a class="btn btn-outline-dark btn-lg" asp-controller="Solicitudes" asp-action="Index">Ver mis solicitudes</a>
+    </div>
+</section>
+
+<section class="flow" aria-label="Cómo funciona">
+    <div class="flow-step">
+        <span class="flow-num">1</span>
+        <h2>Registra tu solicitud</h2>
+        <p>Monto e ingresos mensuales se validan contra la regla 5x antes de enviarse.</p>
+    </div>
+    <div class="flow-step">
+        <span class="flow-num">2</span>
+        <h2>El analista evalúa</h2>
+        <p>La cola de pendientes muestra la misma información que tú ves, sin idas y vueltas.</p>
+    </div>
+    <div class="flow-step">
+        <span class="flow-num">3</span>
+        <h2>Recibe la decisión</h2>
+        <p>Estado y motivo llegan por WebSocket y quedan guardados en tu historial.</p>
+    </div>
+</section>
