@@ -67,6 +67,7 @@ Notas:
 - Las credenciales **nunca** se suben al repositorio: se configuran en el dashboard de Render (Variables de entorno) o en `appsettings.Development.json` local fuera de Git.
 - Si `Redis__ConnectionString` está vacío, la app usa `IDistributedCache` en memoria para que el desarrollo local funcione sin Redis. En Render **debe** estar configurada.
 - Si `RabbitMq__ConnectionString` está vacío, el publicador registra el error y advierte que la notificación no pudo encolarse; el consumidor queda inactivo.
+- La compresión dinámica de estáticos se desactiva (`<CompressionEnabled>false</CompressionEnabled>` en `CreditoPlataforma.csproj`) para evitar interacciones con WebSocket/negotiate y garantizar que los recursos se sirvan sin gzip (evita bloqueos SRI en scripts de Identity).
 
 ---
 
