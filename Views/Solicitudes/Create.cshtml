@@ -10,6 +10,16 @@
     <div class="alert alert-success" role="alert" id="mensaje-exito">@exito</div>
 }
 
+@if (ViewData["AvisoCola"] is string avisoCola)
+{
+    <div class="alert alert-info" role="alert" id="mensaje-cola">@avisoCola</div>
+}
+
+@if (ViewData["Advertencia"] is string advertencia)
+{
+    <div class="alert alert-warning" role="alert" id="mensaje-advertencia">@advertencia</div>
+}
+
 @if (ViewData["Error"] is string error)
 {
     <div class="alert alert-danger" role="alert" id="mensaje-error">@error</div>

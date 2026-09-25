@@ -10,10 +10,14 @@ using Microsoft.EntityFrameworkCore;
 namespace CreditoPlataforma.Controllers;
 
 [Authorize]
-public class SolicitudesController(ApplicationDbContext context, ISolicitudCacheService cache) : Controller
+public class SolicitudesController(
+    ApplicationDbContext context,
+    ISolicitudCacheService cache,
+    INotificacionPublicador publicador) : Controller
 {
     private readonly ApplicationDbContext _context = context;
     private readonly ISolicitudCacheService _cache = cache;
+    private readonly INotificacionPublicador _publicador = publicador;
 
     [HttpGet]
     public async Task<IActionResult> Index(SolicitudFiltroViewModel filtro)
@@ -130,6 +134,28 @@ public class SolicitudesController(ApplicationDbContext context, ISolicitudCache
         await _context.SaveChangesAsync();
 
         await _cache.InvalidarListadoAsync(cliente.UsuarioId);
+
+        var mensaje = new SolicitudRegistrada
+        {
+            MessageId = Guid.NewGuid().ToString("D"),
+            SolicitudId = solicitud.Id,
+            UsuarioId = cliente.UsuarioId,
+            FechaEventoUtc = DateTime.UtcNow
+        };
+
+        var encolada = await _publicador.PublicarSolicitudRegistradaAsync(mensaje);
+
+        if (encolada)
+        {
+            ViewData["AvisoCola"] =
+                $"Mensaje {mensaje.MessageId} publicado en la cola solicitudes.notificaciones.";
+        }
+        else
+        {
+            ViewData["Advertencia"] =
+                $"La solicitud se registró, pero la notificación no pudo encolarse. " +
+                $"Reenvía el mensaje con el mismo MessageId: {mensaje.MessageId}.";
+        }
 
         ViewData["Exito"] =
             $"Solicitud #{solicitud.Id} registrada correctamente en estado Pendiente " +
