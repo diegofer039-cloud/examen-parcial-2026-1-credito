@@ -5,6 +5,13 @@
 
 <h1>Mis solicitudes</h1>
 
+<div class="mb-2">
+    <span class="text-muted">Estado de la conexión en tiempo real:</span>
+    <span class="badge bg-secondary" id="estado-conexion">Conectando...</span>
+</div>
+
+<div class="alert alert-secondary d-none" role="alert" id="alerta-websocket"></div>
+
 @if (Model.HayErrores)
 {
     <div class="alert alert-danger" role="alert" id="alerta-filtros">
@@ -67,6 +74,7 @@
                     <th>Monto solicitado</th>
                     <th>Ingresos mensuales</th>
                     <th>Estado</th>
+                    <th>Motivo</th>
                     <th></th>
                 </tr>
             </thead>
@@ -79,6 +87,7 @@
                         <td>@item.MontoSolicitado.ToString("N2")</td>
                         <td>@item.IngresosMensuales.ToString("N2")</td>
                         <td class="celda-estado"><partial name="_EstadoSolicitud" model="item.Estado" /></td>
+                        <td class="celda-motivo">@(item.MotivoRechazo ?? "-")</td>
                         <td>
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Detalle</a>
                         </td>
@@ -87,4 +96,9 @@
             </tbody>
         </table>
     }
+}
+
+@section Scripts {
+    <script src="~/lib/signalr/signalr.min.js" asp-append-version="true"></script>
+    <script src="~/js/solicitudes-hub.js" asp-append-version="true"></script>
 }

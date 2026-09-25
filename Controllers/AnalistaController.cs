@@ -1,18 +1,24 @@
 using CreditoPlataforma.Data;
+using CreditoPlataforma.Hubs;
 using CreditoPlataforma.Models;
 using CreditoPlataforma.Models.ViewModels;
 using CreditoPlataforma.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CreditoPlataforma.Controllers;
 
 [Authorize(Roles = SeedData.RolAnalista)]
-public class AnalistaController(ApplicationDbContext context, ISolicitudCacheService cache) : Controller
+public class AnalistaController(
+    ApplicationDbContext context,
+    ISolicitudCacheService cache,
+    IHubContext<SolicitudesHub> hub) : Controller
 {
     private readonly ApplicationDbContext _context = context;
     private readonly ISolicitudCacheService _cache = cache;
+    private readonly IHubContext<SolicitudesHub> _hub = hub;
 
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -57,6 +63,7 @@ public class AnalistaController(ApplicationDbContext context, ISolicitudCacheSer
         solicitud.MotivoRechazo = null;
         await _context.SaveChangesAsync();
         await _cache.InvalidarListadoPorClienteAsync(solicitud.ClienteId);
+        await NotificarPropietario(solicitud);
 
         TempData["MensajeExito"] = $"Solicitud #{solicitud.Id} aprobada correctamente.";
         return RedirectToAction(nameof(Index));
@@ -124,9 +131,24 @@ public class AnalistaController(ApplicationDbContext context, ISolicitudCacheSer
         solicitud.MotivoRechazo = modelo.MotivoRechazo.Trim();
         await _context.SaveChangesAsync();
         await _cache.InvalidarListadoPorClienteAsync(solicitud.ClienteId);
+        await NotificarPropietario(solicitud);
 
         TempData["MensajeExito"] = $"Solicitud #{solicitud.Id} rechazada correctamente.";
         return RedirectToAction(nameof(Index));
+    }
+
+    private async Task NotificarPropietario(SolicitudCredito solicitud)
+    {
+        var usuarioPropietario = solicitud.Cliente.UsuarioId;
+        if (string.IsNullOrEmpty(usuarioPropietario))
+        {
+            return;
+        }
+
+        var evento = new SolicitudEstadoDto(solicitud.Id, solicitud.Estado.ToString(), solicitud.MotivoRechazo);
+
+        await _hub.Clients.User(usuarioPropietario)
+            .SendAsync("SolicitudEstadoActualizado", evento);
     }
 
     private async Task<SolicitudCredito?> CargarSolicitudParaProcesar(int id)
