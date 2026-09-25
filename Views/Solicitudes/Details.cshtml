@@ -1,0 +1,62 @@
+@model SolicitudCredito
+@{
+    ViewData["Title"] = "Detalle de la solicitud";
+}
+
+<h1>Solicitud #@Model.Id</h1>
+
+@if (TempData["MensajeExito"] is string exito)
+{
+    <div class="alert alert-success" role="alert">@exito</div>
+}
+@if (TempData["MensajeError"] is string error)
+{
+    <div class="alert alert-danger" role="alert">@error</div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-5">Estado</dt>
+            <dd class="col-sm-7 celda-estado"><partial name="_EstadoSolicitud" model="Model.Estado" /></dd>
+
+            <dt class="col-sm-5">Monto solicitado</dt>
+            <dd class="col-sm-7">@Model.MontoSolicitado.ToString("N2")</dd>
+
+            <dt class="col-sm-5">Fecha de solicitud</dt>
+            <dd class="col-sm-7">@Model.FechaSolicitud.ToString("yyyy-MM-dd HH:mm") (UTC)</dd>
+
+            <dt class="col-sm-5">Motivo de rechazo</dt>
+            <dd class="col-sm-7">@(string.IsNullOrWhiteSpace(Model.MotivoRechazo) ? "-" : Model.MotivoRechazo)</dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-5">Cliente</dt>
+            <dd class="col-sm-7">#@Model.Cliente.Id</dd>
+
+            <dt class="col-sm-5">Usuario</dt>
+            <dd class="col-sm-7">@(Model.Cliente.Usuario?.Email ?? "-")</dd>
+
+            <dt class="col-sm-5">Ingresos mensuales</dt>
+            <dd class="col-sm-7">@Model.Cliente.IngresosMensuales.ToString("N2")</dd>
+
+            <dt class="col-sm-5">Cliente activo</dt>
+            <dd class="col-sm-7">@(Model.Cliente.Activo ? "Sí" : "No")</dd>
+
+            <dt class="col-sm-5">Regla 5x ingresos</dt>
+            <dd class="col-sm-7">
+                @if (Model.MontoSolicitado <= Model.Cliente.IngresosMensuales * 5)
+                {
+                    <span class="text-success">Dentro del límite (≤ 5x)</span>
+                }
+                else
+                {
+                    <span class="text-danger">Excede el límite (&gt; 5x)</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Volver a mis solicitudes</a>
