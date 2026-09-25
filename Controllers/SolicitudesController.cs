@@ -2,6 +2,7 @@ using System.Security.Claims;
 using CreditoPlataforma.Data;
 using CreditoPlataforma.Models;
 using CreditoPlataforma.Models.ViewModels;
+using CreditoPlataforma.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore;
 namespace CreditoPlataforma.Controllers;
 
 [Authorize]
-public class SolicitudesController(ApplicationDbContext context) : Controller
+public class SolicitudesController(ApplicationDbContext context, ISolicitudCacheService cache) : Controller
 {
     private readonly ApplicationDbContext _context = context;
+    private readonly ISolicitudCacheService _cache = cache;
 
     [HttpGet]
     public async Task<IActionResult> Index(SolicitudFiltroViewModel filtro)
@@ -22,7 +24,16 @@ public class SolicitudesController(ApplicationDbContext context) : Controller
             return View(filtro);
         }
 
-        filtro.Resultados = await ConsultarSolicitudesUsuario(filtro);
+        var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        var listado = await _cache.GetListadoAsync(usuarioId);
+
+        if (listado is null)
+        {
+            listado = await ConsultarListadoUsuario(usuarioId);
+            await _cache.SetListadoAsync(usuarioId, listado);
+        }
+
+        filtro.Resultados = AplicarFiltros(listado, filtro);
         return View(filtro);
     }
 
@@ -50,6 +61,9 @@ public class SolicitudesController(ApplicationDbContext context) : Controller
         {
             return Forbid();
         }
+
+        HttpContext.Session.SetInt32("UltimaSolicitudId", solicitud.Id);
+        HttpContext.Session.SetString("UltimaSolicitudMonto", solicitud.MontoSolicitado.ToString("N2"));
 
         return View(solicitud);
     }
@@ -115,6 +129,8 @@ public class SolicitudesController(ApplicationDbContext context) : Controller
         _context.SolicitudesCredito.Add(solicitud);
         await _context.SaveChangesAsync();
 
+        await _cache.InvalidarListadoAsync(cliente.UsuarioId);
+
         ViewData["Exito"] =
             $"Solicitud #{solicitud.Id} registrada correctamente en estado Pendiente " +
             $"por {solicitud.MontoSolicitado:N2}.";
@@ -133,13 +149,31 @@ public class SolicitudesController(ApplicationDbContext context) : Controller
         return await _context.Clientes.FirstOrDefaultAsync(c => c.UsuarioId == userId);
     }
 
-    private async Task<List<SolicitudCredito>> ConsultarSolicitudesUsuario(SolicitudFiltroViewModel filtro)
+    private async Task<List<SolicitudListadoDto>> ConsultarListadoUsuario(string usuarioId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return await _context.SolicitudesCredito
+            .AsNoTracking()
+            .Where(s => s.Cliente.UsuarioId == usuarioId)
+            .Select(s => new SolicitudListadoDto
+            {
+                Id = s.Id,
+                ClienteId = s.ClienteId,
+                MontoSolicitado = s.MontoSolicitado,
+                FechaSolicitud = s.FechaSolicitud,
+                Estado = s.Estado,
+                MotivoRechazo = s.MotivoRechazo,
+                IngresosMensuales = s.Cliente.IngresosMensuales,
+                ClienteActivo = s.Cliente.Activo
+            })
+            .OrderByDescending(s => s.FechaSolicitud)
+            .ToListAsync();
+    }
 
-        IQueryable<SolicitudCredito> query = _context.SolicitudesCredito
-            .Include(s => s.Cliente)
-            .Where(s => s.Cliente.UsuarioId == userId);
+    private static List<SolicitudListadoDto> AplicarFiltros(
+        List<SolicitudListadoDto> listado,
+        SolicitudFiltroViewModel filtro)
+    {
+        IEnumerable<SolicitudListadoDto> query = listado;
 
         if (filtro.Estado.HasValue)
         {
@@ -168,6 +202,6 @@ public class SolicitudesController(ApplicationDbContext context) : Controller
             query = query.Where(s => s.FechaSolicitud < hasta);
         }
 
-        return await query.OrderByDescending(s => s.FechaSolicitud).ToListAsync();
+        return query.OrderByDescending(s => s.FechaSolicitud).ToList();
     }
 }

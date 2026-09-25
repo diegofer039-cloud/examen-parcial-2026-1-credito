@@ -14,7 +14,7 @@ public class SolicitudFiltroViewModel
 
     public DateTime? FechaHasta { get; set; }
 
-    public List<SolicitudCredito> Resultados { get; set; } = new();
+    public List<SolicitudListadoDto> Resultados { get; set; } = new();
 
     public List<string> Errores { get; set; } = new();
 
