@@ -1,0 +1,84 @@
+- generic [active] [ref=f17e1]:
+  - banner [ref=f17e2]:
+    - navigation [ref=f17e3]:
+      - generic [ref=f17e4]:
+        - link "CreditoPlataforma" [ref=f17e5] [cursor=pointer]:
+          - /url: /
+        - generic [ref=f17e6]:
+          - list [ref=f17e7]:
+            - listitem [ref=f17e8]:
+              - link "Home" [ref=f17e9] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=f17e10]:
+              - link "Mis solicitudes" [ref=f17e11] [cursor=pointer]:
+                - /url: /Solicitudes
+            - listitem [ref=f17e12]:
+              - link "Nueva solicitud" [ref=f17e13] [cursor=pointer]:
+                - /url: /Solicitudes/Create
+            - listitem [ref=f17e14]:
+              - link "Mis notificaciones" [ref=f17e15] [cursor=pointer]:
+                - /url: /Notificaciones
+            - listitem [ref=f17e16]:
+              - link "Privacy" [ref=f17e17] [cursor=pointer]:
+                - /url: /Home/Privacy
+          - list [ref=f17e18]:
+            - listitem [ref=f17e19]:
+              - link "Hello cliente1@demo.com!" [ref=f17e20] [cursor=pointer]:
+                - /url: /Identity/Account/Manage
+            - listitem [ref=f17e21]:
+              - button "Logout" [ref=f17e23] [cursor=pointer]
+  - main [ref=f17e25]:
+    - heading "Mis solicitudes" [level=1] [ref=f17e26]
+    - generic [ref=f17e27]:
+      - text: "Estado de la conexión en tiempo real:"
+      - generic [ref=f17e28]: Conectando...
+    - generic [ref=f17e29]:
+      - generic [ref=f17e30]:
+        - generic [ref=f17e31]:
+          - generic [ref=f17e32]: Estado
+          - combobox "Estado" [ref=f17e33]:
+            - option "Todos" [selected]
+            - option "Pendiente"
+            - option "Aprobado"
+            - option "Rechazado"
+        - generic [ref=f17e34]:
+          - generic [ref=f17e35]: Monto mínimo
+          - spinbutton "Monto mínimo" [ref=f17e36]
+        - generic [ref=f17e37]:
+          - generic [ref=f17e38]: Monto máximo
+          - spinbutton "Monto máximo" [ref=f17e39]
+        - generic [ref=f17e40]:
+          - generic [ref=f17e41]: Fecha inicio
+          - textbox "Fecha inicio" [ref=f17e42]
+        - generic [ref=f17e43]:
+          - generic [ref=f17e44]: Fecha fin
+          - textbox "Fecha fin" [ref=f17e45]
+        - button "Filtrar" [ref=f17e47] [cursor=pointer]
+      - link "Limpiar filtros" [ref=f17e49] [cursor=pointer]:
+        - /url: /Solicitudes
+    - table [ref=f17e50]:
+      - rowgroup [ref=f17e51]:
+        - row [ref=f17e52]:
+          - columnheader "#" [ref=f17e53]
+          - columnheader "Fecha" [ref=f17e54]
+          - columnheader "Monto solicitado" [ref=f17e55]
+          - columnheader "Ingresos mensuales" [ref=f17e56]
+          - columnheader "Estado" [ref=f17e57]
+          - columnheader "Motivo" [ref=f17e58]
+          - columnheader [ref=f17e59]
+      - rowgroup [ref=f17e60]:
+        - row [ref=f17e61]:
+          - cell "1" [ref=f17e62]
+          - cell "2026-09-23" [ref=f17e63]
+          - cell "8,000.00" [ref=f17e64]
+          - cell "5,000.00" [ref=f17e65]
+          - cell "Pendiente" [ref=f17e66]
+          - cell "-" [ref=f17e68]
+          - cell [ref=f17e69]:
+            - link "Detalle" [ref=f17e70] [cursor=pointer]:
+              - /url: /Solicitudes/Details/1
+  - contentinfo [ref=f17e71]:
+    - generic [ref=f17e72]:
+      - text: © 2026 - CreditoPlataforma -
+      - link "Privacy" [ref=f17e73] [cursor=pointer]:
+        - /url: /Home/Privacy

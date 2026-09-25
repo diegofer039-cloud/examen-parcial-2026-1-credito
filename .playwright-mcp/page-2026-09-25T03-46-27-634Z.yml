@@ -1,0 +1,72 @@
+- generic [active] [ref=f2e1]:
+  - banner [ref=f2e2]:
+    - navigation [ref=f2e3]:
+      - generic [ref=f2e4]:
+        - link "CreditoPlataforma" [ref=f2e5] [cursor=pointer]:
+          - /url: /
+        - button "Toggle navigation" [ref=f2e6]
+        - generic [ref=f2e7]:
+          - list [ref=f2e8]:
+            - listitem [ref=f2e9]:
+              - link "Home" [ref=f2e10] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=f2e11]:
+              - link "Mis solicitudes" [ref=f2e12] [cursor=pointer]:
+                - /url: /Solicitudes
+            - listitem [ref=f2e13]:
+              - link "Nueva solicitud" [ref=f2e14] [cursor=pointer]:
+                - /url: /Solicitudes/Create
+            - listitem [ref=f2e15]:
+              - link "Mis notificaciones" [ref=f2e16] [cursor=pointer]:
+                - /url: /Notificaciones
+            - listitem [ref=f2e17]:
+              - link "Privacy" [ref=f2e18] [cursor=pointer]:
+                - /url: /Home/Privacy
+          - list [ref=f2e19]:
+            - listitem [ref=f2e20]:
+              - link "Register" [ref=f2e21] [cursor=pointer]:
+                - /url: /Identity/Account/Register
+            - listitem [ref=f2e22]:
+              - link "Login" [ref=f2e23] [cursor=pointer]:
+                - /url: /Identity/Account/Login
+  - main [ref=f2e25]:
+    - heading "Log in" [level=1] [ref=f2e26]
+    - generic [ref=f2e27]:
+      - generic [ref=f2e30]:
+        - heading "Use a local account to log in." [level=2] [ref=f2e31]
+        - separator [ref=f2e32]
+        - generic [ref=f2e33]:
+          - textbox "Email" [ref=f2e34]:
+            - /placeholder: name@example.com
+          - text: Email
+        - generic [ref=f2e35]:
+          - textbox "Password" [ref=f2e36]:
+            - /placeholder: password
+          - text: Password
+        - generic [ref=f2e38]:
+          - checkbox "Remember me?" [ref=f2e39]
+          - text: Remember me?
+        - button "Log in" [ref=f2e41]
+        - generic [ref=f2e42]:
+          - paragraph [ref=f2e43]:
+            - link "Forgot your password?" [ref=f2e44] [cursor=pointer]:
+              - /url: /Identity/Account/ForgotPassword
+          - paragraph [ref=f2e45]:
+            - link "Register as a new user" [ref=f2e46] [cursor=pointer]:
+              - /url: /Identity/Account/Register?returnUrl=%2F
+          - paragraph [ref=f2e47]:
+            - link "Resend email confirmation" [ref=f2e48] [cursor=pointer]:
+              - /url: /Identity/Account/ResendEmailConfirmation
+      - generic [ref=f2e50]:
+        - heading "Use another service to log in." [level=3] [ref=f2e51]
+        - separator [ref=f2e52]
+        - paragraph [ref=f2e54]:
+          - text: There are no external authentication services configured. See this
+          - link "article about setting up this ASP.NET application to support logging in via external services" [ref=f2e55] [cursor=pointer]:
+            - /url: https://go.microsoft.com/fwlink/?LinkID=532715
+          - text: .
+  - contentinfo [ref=f2e56]:
+    - generic [ref=f2e57]:
+      - text: © 2026 - CreditoPlataforma -
+      - link "Privacy" [ref=f2e58] [cursor=pointer]:
+        - /url: /Home/Privacy

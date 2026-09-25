@@ -1,0 +1,43 @@
+- generic [active] [ref=f18e1]:
+  - banner [ref=f18e2]:
+    - navigation [ref=f18e3]:
+      - generic [ref=f18e4]:
+        - link "CreditoPlataforma" [ref=f18e5] [cursor=pointer]:
+          - /url: /
+        - generic [ref=f18e6]:
+          - list [ref=f18e7]:
+            - listitem [ref=f18e8]:
+              - link "Home" [ref=f18e9] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=f18e10]:
+              - link "Mis solicitudes" [ref=f18e11] [cursor=pointer]:
+                - /url: /Solicitudes
+            - listitem [ref=f18e12]:
+              - link "Nueva solicitud" [ref=f18e13] [cursor=pointer]:
+                - /url: /Solicitudes/Create
+            - listitem [ref=f18e14]:
+              - link "Mis notificaciones" [ref=f18e15] [cursor=pointer]:
+                - /url: /Notificaciones
+            - listitem [ref=f18e16]:
+              - link "Privacy" [ref=f18e17] [cursor=pointer]:
+                - /url: /Home/Privacy
+          - list [ref=f18e18]:
+            - listitem [ref=f18e19]:
+              - link "Hello cliente1@demo.com!" [ref=f18e20] [cursor=pointer]:
+                - /url: /Identity/Account/Manage
+            - listitem [ref=f18e21]:
+              - button "Logout" [ref=f18e23] [cursor=pointer]
+  - main [ref=f18e25]:
+    - heading "Mis notificaciones" [level=1] [ref=f18e26]
+    - paragraph [ref=f18e27]:
+      - text: Notificaciones generadas de forma asíncrona desde la cola durable
+      - code [ref=f18e28]: solicitudes.notificaciones
+      - text: (CloudAMQP) por el consumidor
+      - code [ref=f18e29]: BackgroundService
+      - text: .
+    - generic [ref=f18e30]: Todavía no tienes notificaciones.
+  - contentinfo [ref=f18e31]:
+    - generic [ref=f18e32]:
+      - text: © 2026 - CreditoPlataforma -
+      - link "Privacy" [ref=f18e33] [cursor=pointer]:
+        - /url: /Home/Privacy
