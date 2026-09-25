@@ -1,0 +1,10 @@
+@model EstadoSolicitud
+@{
+    var clase = Model switch
+    {
+        EstadoSolicitud.Aprobado => "bg-success",
+        EstadoSolicitud.Rechazado => "bg-danger",
+        _ => "bg-warning text-dark"
+    };
+}
+<span class="badge @clase">@Model</span>
