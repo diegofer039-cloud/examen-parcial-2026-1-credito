@@ -1,0 +1,55 @@
+@model SolicitudRegistroViewModel
+@{
+    ViewData["Title"] = "Registrar solicitud";
+}
+
+<h1>Registrar solicitud de crédito</h1>
+
+@if (ViewData["Exito"] is string exito)
+{
+    <div class="alert alert-success" role="alert" id="mensaje-exito">@exito</div>
+}
+
+@if (ViewData["Error"] is string error)
+{
+    <div class="alert alert-danger" role="alert" id="mensaje-error">@error</div>
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger" id="mensaje-validacion"></div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post" class="border rounded p-3 bg-light">
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label asp-for="MontoSolicitado" class="form-label"></label>
+                <input asp-for="MontoSolicitado" class="form-control" id="MontoSolicitado" />
+                <span asp-validation-for="MontoSolicitado" class="text-danger"></span>
+                <div class="form-text">
+                    Ingresos mensuales registrados:
+                    <strong>@(((double)(ViewBag.IngresosMensuales ?? 0d)).ToString("N2"))</strong>.
+                    Máximo permitido (10x):
+                    <strong>@(((double)(ViewBag.IngresosMensuales ?? 0d)) * 10).ToString("N2"))</strong>.
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar solicitud</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="alert alert-info">
+            <h5>Reglas aplicadas en el servidor</h5>
+            <ul class="mb-0">
+                <li>Debes estar autenticado.</li>
+                <li>El cliente debe estar activo.</li>
+                <li>Solo puede existir una solicitud <strong>Pendiente</strong> por cliente.</li>
+                <li>El monto no puede superar <strong>10 veces</strong> los ingresos mensuales.</li>
+                <li>El monto debe ser mayor a 0.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
