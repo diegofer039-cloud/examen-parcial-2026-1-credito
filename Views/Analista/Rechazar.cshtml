@@ -1,0 +1,45 @@
+@model RechazoViewModel
+@{
+    ViewData["Title"] = "Rechazar solicitud";
+}
+
+<h1>Rechazar solicitud #@Model.SolicitudId</h1>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Rechazar" method="post" class="border rounded p-3 bg-light">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="SolicitudId" />
+            <dl class="row">
+                <dt class="col-sm-4">Monto solicitado</dt>
+                <dd class="col-sm-8">@Model.MontoSolicitado.ToString("N2")</dd>
+                <dt class="col-sm-4">Ingresos mensuales</dt>
+                <dd class="col-sm-8">@Model.IngresosMensuales.ToString("N2")</dd>
+            </dl>
+            <div class="mb-3">
+                <label asp-for="MotivoRechazo" class="form-label"></label>
+                <textarea asp-for="MotivoRechazo" class="form-control" rows="4" id="MotivoRechazo"></textarea>
+                <span asp-validation-for="MotivoRechazo" class="text-danger"></span>
+                <div class="form-text">El motivo es obligatorio: se mostrará al cliente junto con el estado Rechazado.</div>
+            </div>
+            <button type="submit" class="btn btn-danger">Confirmar rechazo</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="alert alert-info">
+            <h5>Validaciones del servidor</h5>
+            <ul class="mb-0">
+                <li>Solo se procesan solicitudes en estado <strong>Pendiente</strong>.</li>
+                <li>El <strong>MotivoRechazo</strong> es obligatorio.</li>
+                <li>Los usuarios sin rol <strong>Analista</strong> no tienen acceso al panel.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

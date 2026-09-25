@@ -32,6 +32,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (User.IsInRole(CreditoPlataforma.Data.SeedData.RolAnalista))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Analista" asp-action="Index">Panel Analista</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Solicitudes" asp-action="Index">Mis solicitudes</a>
                         </li>
