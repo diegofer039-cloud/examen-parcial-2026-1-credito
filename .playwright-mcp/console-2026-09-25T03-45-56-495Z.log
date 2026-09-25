@@ -1,8 +1,0 @@
-[   30709ms] ReferenceError: jQuery is not defined
-    at https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js:4:151
-    at https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js:4:159
-[   30842ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5110/Identity/lib/jquery-validation/dist/jquery.validate.min.js:0
-[   30848ms] ReferenceError: jQuery is not defined
-    at https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js:8:201
-    at https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js:8:240
-[   30870ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5110/Identity/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js:0

@@ -1,2 +1,0 @@
-[     437ms] [INFO] [2026-09-25T04:03:21.709Z] Information: Normalizing '/hubs/solicitudes' to 'http://localhost:5110/hubs/solicitudes'. @ http://localhost:5110/lib/signalr/signalr.min.js?v=l-m5fmQqcuWkcJFxR6K_efhsrYKaXGeGrbEGFNJIu5U:0
-[     549ms] [INFO] [2026-09-25T04:03:21.822Z] Information: WebSocket connected to ws://localhost:5110/hubs/solicitudes?id=7YPMaNRmcPnnlfVpkiLBnw. @ http://localhost:5110/lib/signalr/signalr.min.js?v=l-m5fmQqcuWkcJFxR6K_efhsrYKaXGeGrbEGFNJIu5U:0
