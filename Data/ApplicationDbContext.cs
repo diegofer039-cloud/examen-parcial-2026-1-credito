@@ -10,6 +10,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<SolicitudCredito> SolicitudesCredito => Set<SolicitudCredito>();
 
+    public DbSet<Notificacion> Notificaciones => Set<Notificacion>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -54,6 +56,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.ToTable(t => t.HasCheckConstraint(
                 "CK_Solicitud_MontoSolicitado",
                 "\"MontoSolicitado\" > 0"));
+        });
+
+        builder.Entity<Notificacion>(entity =>
+        {
+            entity.HasIndex(n => n.MessageId).IsUnique();
+            entity.HasIndex(n => n.UsuarioId);
+            entity.Property(n => n.Texto).IsRequired().HasMaxLength(500);
         });
     }
 }

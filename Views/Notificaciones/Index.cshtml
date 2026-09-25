@@ -1,0 +1,45 @@
+@model IEnumerable<CreditoPlataforma.Models.Notificacion>
+@{
+    ViewData["Title"] = "Mis notificaciones";
+}
+
+<h1>Mis notificaciones</h1>
+<p class="text-muted">
+    Notificaciones generadas de forma asíncrona desde la cola durable <code>solicitudes.notificaciones</code>
+    (CloudAMQP) por el consumidor <code>BackgroundService</code>.
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-secondary">Todavía no tienes notificaciones.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Solicitud</th>
+                <th>MessageId</th>
+                <th>Texto</th>
+                <th>Procesada (UTC)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>
+                        <a asp-controller="Solicitudes" asp-action="Details" asp-route-id="@item.SolicitudId">
+                            #@item.SolicitudId
+                        </a>
+                    </td>
+                    <td><code class="small">@item.MessageId</code></td>
+                    <td>@item.Texto</td>
+                    <td>@item.FechaProcesamientoUtc.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

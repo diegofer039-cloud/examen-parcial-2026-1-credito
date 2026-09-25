@@ -1,3 +1,4 @@
+using CreditoPlataforma.Configuration;
 using CreditoPlataforma.Data;
 using CreditoPlataforma.Hubs;
 using CreditoPlataforma.Services;
@@ -43,6 +44,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISolicitudCacheService, SolicitudCacheService>();
 
 builder.Services.AddSignalR();
+
+builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection(RabbitMqOptions.Seccion));
+builder.Services.AddSingleton<IRabbitMqConexionProvider, RabbitMqConexionProvider>();
+builder.Services.AddSingleton<INotificacionPublicador, RabbitMqNotificacionPublicador>();
+builder.Services.AddHostedService<RabbitMqNotificacionConsumidor>();
 
 builder.Services.AddControllersWithViews();
 
