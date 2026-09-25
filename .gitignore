@@ -25,3 +25,6 @@ Thumbs.db
 
 # playwright mcp artifacts
 .playwright-mcp/
+
+# capturas de verificacion
+/*.png
