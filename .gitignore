@@ -1,0 +1,24 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.swp
+
+## SQLite local
+app.db
+app.db-*
+migration.sql
+
+## Node
+node_modules/
+
+## Secrets / entorno
+appsettings.Local.json
+*.pfx
+.env
+
+## OS
+Thumbs.db
+.DS_Store
