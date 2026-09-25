@@ -77,7 +77,7 @@
                         <td>@item.Id</td>
                         <td>@item.FechaSolicitud.ToString("yyyy-MM-dd")</td>
                         <td>@item.MontoSolicitado.ToString("N2")</td>
-                        <td>@item.Cliente.IngresosMensuales.ToString("N2")</td>
+                        <td>@item.IngresosMensuales.ToString("N2")</td>
                         <td class="celda-estado"><partial name="_EstadoSolicitud" model="item.Estado" /></td>
                         <td>
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Detalle</a>

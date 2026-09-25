@@ -20,6 +20,15 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @if (User.Identity?.IsAuthenticated == true && Context.Session.GetInt32("UltimaSolicitudId") is int ultimaSolicitudId)
+                        {
+                            var montoUltima = Context.Session.GetString("UltimaSolicitudMonto") ?? "-";
+                            <li class="nav-item">
+                                <a class="nav-link text-success" asp-controller="Solicitudes" asp-action="Details" asp-route-id="@ultimaSolicitudId" id="enlace-ultima-solicitud">
+                                    Ver última solicitud @montoUltima
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
