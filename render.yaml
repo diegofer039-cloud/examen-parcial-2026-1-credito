@@ -1,16 +1,14 @@
 services:
   - type: web
     name: credito-plataforma
-    runtime: dotnet
+    runtime: docker
     plan: free
-    buildCommand: "dotnet CreditoPlataforma.csproj --configuration Release"
-    # $PORT se expande en el shell del start command; no confiar en ${PORT} dentro de una variable de entorno.
-    startCommand: 'ASPNETCORE_URLS="http://0.0.0.0:$PORT" dotnet bin/Release/net10.0/CreditoPlataforma.dll'
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ConnectionStrings__DefaultConnection
-        value: "DataSource=/var/data/app.db;Cache=Shared"
+        value: "DataSource=/app/app.db;Cache=Shared"
       - key: Redis__ConnectionString
         sync: false
       - key: RabbitMq__ConnectionString
@@ -21,7 +19,3 @@ services:
         value: "true"
       - key: RabbitMq__PrefetchCount
         value: "10"
-    disk:
-      name: credito-sqlite
-      mountPath: /var/data
-      sizeGB: 1

@@ -160,6 +160,8 @@ Las capturas y los pasos quedan documentados aquí y en cada PR.
 3. Completar las variables marcadas como *secret* (`Redis__ConnectionString`, `RabbitMq__ConnectionString`).
 4. Desplegar.
 
+> **Nota (plan Free):** Render no ofrece discos ni runtime `.NET` nativo en planes gratuitos, por lo que el despliegue usa **Docker** (`runtime: docker` + `Dockerfile` multi-etapa con .NET 10). Sin disco persistente, `app.db` vive en `/app` y se regenera en cada deploy; el seed (`SeedData.InitializeAsync`) repuebla los usuarios y solicitudes de demostración automáticamente. Para datos persistentes, pasarse a un plan con discos y agregar el bloque `disk` montando `/var/data`.
+
 ### Variables mínimas
 
 ```
