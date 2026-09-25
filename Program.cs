@@ -1,4 +1,5 @@
 using CreditoPlataforma.Data;
+using CreditoPlataforma.Hubs;
 using CreditoPlataforma.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISolicitudCacheService, SolicitudCacheService>();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -73,5 +76,7 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+app.MapHub<SolicitudesHub>("/hubs/solicitudes");
 
 app.Run();
